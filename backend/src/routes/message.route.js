@@ -4,8 +4,12 @@ import {  getUsersForSidebar,getMessages,sendMessage } from "../controllers/mess
 
 const msgRouter = express.Router();
 
+// msgRouter.get("/users", protectRoute, getUsersForSidebar);
+// msgRouter.get("/:id", protectRoute, getMessages);
+// msgRouter.post("/send/:id", protectRoute, sendMessage);
+
 msgRouter.get("/users", protectRoute, getUsersForSidebar);
-msgRouter.get("/:id", protectRoute, getMessages);
-msgRouter.post("/send/:id", protectRoute, sendMessage);
+msgRouter.get("/messages/:userId", protectRoute, getMessages);  // Changed from :id to :userId
+msgRouter.post("/send/:receiverId", protectRoute, sendMessage); // Changed from :id to :receiverId
 
 export default msgRouter;

@@ -21,19 +21,38 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL || "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: [
+      "http://localhost:5173", // for local dev
+      process.env.CLIENT_URL || "https://your-vercel-app.vercel.app", // for production
+    ],
     credentials: true,
   })
 );
 
+
+
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Optional: Base route to check if API is live
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+//   });
+// }
+
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.send("ChatterBox API is running...");
 });
 
 server.listen(PORT, () => {

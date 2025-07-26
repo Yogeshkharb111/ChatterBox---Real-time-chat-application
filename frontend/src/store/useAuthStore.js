@@ -44,15 +44,22 @@ export const useAuthStore = create((set, get) => ({
   },
 
   login: async (data) => {
+    console.log("🚀 Sending login request with data:", data); // ✅ Logs form data
     set({ isLoggingIn: true });
+
     try {
       const res = await axiosInstance.post("/auth/login", data);
+      console.log("✅ Login success:", res.data);
+
       set({ authUser: res.data });
       toast.success("Logged in successfully");
 
       get().connectSocket();
     } catch (error) {
-      toast.error(error.response.data.message);
+      console.error("❌ Login error:", error?.response || error);
+      const errorMessage =
+        error?.response?.data?.message || "Login failed. Try again.";
+      toast.error(errorMessage);
     } finally {
       set({ isLoggingIn: false });
     }

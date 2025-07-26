@@ -50,8 +50,15 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  console.log("📥 Incoming login request:", req.body); // ✅ Logs full body
+
   const { email, password } = req.body;
+
   try {
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -62,7 +69,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    generateToken(user._id, res);
+    generateToken(user._id, res); // Set JWT cookie
 
     res.status(200).json({
       _id: user._id,
@@ -71,10 +78,11 @@ export const login = async (req, res) => {
       profilePic: user.profilePic,
     });
   } catch (error) {
-    console.log("Error in login controller", error.message);
+    console.log("❌ Error in login controller:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 export const logout = (req, res) => {
   try {

@@ -31,12 +31,13 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // for local dev
-      process.env.CLIENT_URL || "https://your-vercel-app.vercel.app", // for production
+      "http://localhost:5173",
+      process.env.CLIENT_URL, // only use the env var in production
     ],
     credentials: true,
   })
 );
+
 
 
 

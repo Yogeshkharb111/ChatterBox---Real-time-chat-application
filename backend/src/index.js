@@ -1,4 +1,5 @@
 import express from "express";
+import http from "http";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -6,9 +7,13 @@ import path from "path";
 import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
-import { app, server } from "./lib/socket.js";
+import { initSocket } from "./lib/socket.js";
 
 dotenv.config();
+
+const app = express();
+const server = http.createServer(app);
+initSocket(server); // 👈 Pass server here
 
 const PORT = process.env.PORT;
 const __dirname = path.resolve();

@@ -32,11 +32,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      process.env.CLIENT_URL, // only use the env var in production
+      "https://chatter-box-real-time-chat-applicat-mu.vercel.app", // ✅ Add this exact URL
     ],
     credentials: true,
   })
 );
+
 
 
 

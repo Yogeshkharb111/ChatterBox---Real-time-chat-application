@@ -55,6 +55,11 @@ app.get("/", (req, res) => {
   res.send("ChatterBox API is running...");
 });
 
+app.get("/", (req, res) => {
+  res.send("ChatterBox API is running...");
+});
+
+
 server.listen(PORT, () => {
   console.log("Server is running on PORT: " + PORT);
   connectDB();

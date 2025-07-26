@@ -21,37 +21,18 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL || "http://localhost:5173",
-//     credentials: true,
-//   })
-// );
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://chatter-box-real-time-chat-applicat-mu.vercel.app", // ✅ Add this exact URL
-    ],
+    origin: [process.env.CLIENT_URL, "http://localhost:5173"],
     credentials: true,
   })
 );
 
 
 
-
-
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
-
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//   });
-// }
 
 app.get("/", (req, res) => {
   res.send("ChatterBox API is running...");
